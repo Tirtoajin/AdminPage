@@ -2,6 +2,8 @@
 
 ![alt text](https://github.com/Tirtoajin/AdminPage/blob/main/public/adminPage.png?raw=true)
 
+![alt text](https://github.com/Tirtoajin/AdminPage/blob/main/public/notifAdmin.png?raw=true)
+
 ##  Memulai Aplikasi
 
 Sebelum menggunakan aplikasi, pastikan semuanya sudah berjalan dengan benar.
