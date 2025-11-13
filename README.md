@@ -37,7 +37,7 @@ Anda akan melihat nama produk beserta sisa stok terkini.
 Contoh: Kopi Susu (Sisa: 20).
 Masukkan Jumlah:
 Ketik jumlah barang yang dibeli pelanggan.
-Validasi Stok (Penting!):
+Validasi Stok :
 Jika Anda memasukkan angka melebihi stok yang tersedia, sistem akan memunculkan peringatan:  "Maksimal pembelian hanya X item!".
 Tombol simpan akan terkunci otomatis untuk mencegah stok minus.
 Simpan:
