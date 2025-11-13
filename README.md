@@ -1,6 +1,6 @@
 #   Admin Page
 
-
+![alt text](https://github.com/Tirtoajin/AdminPage/blob/main/public/adminPage.png?raw=true)
 
 ##  Memulai Aplikasi
 
