@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Toko Sederhana</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  </head>
+  <body>
+    <div class="header-container">
+      <h1>Dashboard Admin Toko</h1>
+      <p>Kelola produk, pembelian, dan stok dengan mudah.</p>
+    </div>
+
+    <div class="main-content">
+      <div class="form-section">
+        <div class="form-card">
+          <h3 class="card-title">Input Pembelian (Kurangi Stok)</h3>
+          <form action="/beli" method="POST">
+            <div class="input-group">
+              <label for="beli-product">Produk</label>
+              <select id="beli-product" name="product_id" required onchange="cekStok()">
+                <% products.forEach(prod => { %>
+                <option value="<%= prod.id %>" data-stok="<%= prod.stok %>"><%= prod.nama_produk %> (Sisa: <%= prod.stok %>)</option>
+                <% }) %>
+              </select>
+            </div>
+
+            <div class="input-group">
+              <label for="beli-jumlah">Jumlah Beli</label>
+              <input type="number" id="beli-jumlah" name="jumlah" min="1" value="1" required oninput="cekStok()" />
+
+              <small id="pesan-warning" style="color: #ff4d4d; display: none; font-weight: bold; margin-top: 5px"> ⚠️ Jumlah melebihi sisa stok! </small>
+            </div>
+
+            <button type="submit" id="btn-beli" class="btn btn-submit">Simpan Transaksi</button>
+          </form>
+        </div>
+
+        <div class="form-card">
+          <h3 class="card-title">Input Tambah Stok (Restock)</h3>
+          <form action="/tambah-stok" method="POST">
+            <div class="input-group">
+              <label for="stok-product">Produk</label>
+              <select id="stok-product" name="product_id" required>
+                <% products.forEach(prod => { %>
+                <option value="<%= prod.id %>"><%= prod.nama_produk %> (Sisa: <%= prod.stok %>)</option>
+                <% }) %>
+              </select>
+            </div>
+
+            <div class="input-group">
+              <label for="stok-jumlah">Jumlah Tambahan</label>
+              <input type="number" id="stok-jumlah" name="jumlah" min="1" value="10" required />
+            </div>
+
+            <button type="submit" class="btn btn-restock">Tambah Stok</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="table-section">
+        <h2 class="section-title">Riwayat Pembelian</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Produk</th>
+              <th>Jml</th>
+              <th>Total</th>
+              <th>Waktu</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% purchases.forEach(item => { %>
+            <tr>
+              <td><%= item.id %></td>
+              <td><%= item.nama_produk %></td>
+              <td><%= item.jumlah %></td>
+              <td>Rp<%= item.total_harga %></td>
+              <td><%= item.tanggal.toLocaleString() %></td>
+              <td class="<%= item.status == 'batal' ? 'status-batal' : 'status-sukses' %>"><%= item.status.toUpperCase() %></td>
+              <td>
+                <% if (item.status !== 'batal') { %>
+                <form action="/cancel/<%= item.id %>" method="POST" onsubmit="return confirm('Yakin cancel pesanan ini?');">
+                  <button type="submit" class="btn btn-cancel"><i class="fas fa-times-circle"></i> Batal</button>
+                </form>
+                <% } else { %>
+                <span class="text-batal">-</span>
+                <% } %>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
